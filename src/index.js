@@ -157,6 +157,21 @@ const pad = pads.find((element) => element.color === color)
  *
  */
 function setLevel(level = 1) {
+  if (level == 1 || null) {
+    maxRoundCount = 8
+    return 8;
+  } else if (level == 2) {
+    maxRoundCount = 14
+    return 14;
+  } else if (level == 3) {
+    maxRoundCount = 20
+    return 20;
+  } else if (level == 4) {
+    maxRoundCount = 31
+    return 31;
+  } else {
+    return "Please enter level 1, 2, 3, or 4"
+  }
   // TODO: Write your code here.
 }
 
@@ -176,15 +191,16 @@ function setLevel(level = 1) {
  * getRandomItem([1, 2, 3, 4]) //> returns 1
  */
 function getRandomItem(collection) {
-  // if (collection.length === 0) return null;
-  // const randomIndex = Math.floor(Math.random() * collection.length);
-  // return collection[randomIndex];
+  if (collection.length === 0) return null;
+  const randomIndex = Math.floor(Math.random() * collection.length);
+  return collection[randomIndex];
 }
 
 /**
  * Sets the status text of a given HTML element with a given a message
  */
 function setText(element, text) {
+ element.textContent = text
   // TODO: Write your code here.
   return element;
 }
@@ -203,6 +219,10 @@ function setText(element, text) {
  */
 
 function activatePad(color) {
+ const pad = pads.find((element) => element.color == color);
+  pad.selector.classList.add("activated");
+  pad.sound.play();
+  setTimeout(() => pad.selector.classList.remove("activated"), 500);
   // TODO: Write your code here.
 }
 
@@ -221,7 +241,11 @@ function activatePad(color) {
  */
 
 function activatePads(sequence) {
-  // TODO: Write your code here.
+ sequence.forEach((color, index) => {
+    setTimeout(() => {
+      activatePad(color)
+    }, (index + 1) * 600)
+  })
 }
 
 /**
@@ -248,8 +272,11 @@ function activatePads(sequence) {
  * sequence.
  */
  function playComputerTurn() {
-  // TODO: Write your code here.
-
+padContainer.classList.add("unclickable")
+  setText(statusSpan, "The computer's turn...")
+  setText(heading, `Round ${roundCount} of ${maxRoundCount}`)
+  computerSequence.push(getRandomItem(["red", "green", "blue", "yellow"]))
+  activatePads(computerSequence)
   setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
 }
 
@@ -261,7 +288,14 @@ function activatePads(sequence) {
  * 2. Display a status message showing the player how many presses are left in the round
  */
 function playHumanTurn() {
-  // TODO: Write your code here.
+ padContainer.classList.remove("unclickable");
+  let remainingPresses = computerSequence.length - playerSequence.length;
+  if (remainingPresses == 1) {
+    setText(statusSpan, "Player's turn: 1 press left");
+  } else {
+    setText(statusSpan, `Player's turn: ${remainingPresses} presses left`);
+  }
+  
 }
 
 /**
@@ -287,7 +321,20 @@ function playHumanTurn() {
  *
  */
 function checkPress(color) {
-  // TODO: Write your code here.
+ playerSequence.push(color)
+  const index = playerSequence.length - 1
+  let remainingPresses = computerSequence.length - playerSequence.length
+  if (remainingPresses === 1) {
+    setText(statusSpan, `Player's turn:${remainingPresses} press left`)
+  } else if (remainingPresses > 1) {
+    setText(statusSpan, `Player's turn:${remainingPresses} presses left`)
+  }
+  if (playerSequence[index] !== computerSequence[index]) {
+    resetGame("You lose...Try again");
+  } else if (remainingPresses === 0) {
+    checkRound()
+  }
+ 
 }
 
 /**
@@ -306,6 +353,14 @@ function checkPress(color) {
  */
 
 function checkRound() {
+ if (playerSequence.length === maxRoundCount) {
+    resetGame("Congratulations, you win!", true);
+  } else {
+    roundCount++
+    playerSequence = []
+    setText(statusSpan, "Nice! Keep going!")
+    setTimeout(playComputerTurn, 1000)
+  }
   // TODO: Write your code here.
 }
 
@@ -322,11 +377,11 @@ function resetGame(text) {
   // TODO: Write your code here.
 
   // Uncomment the code below:
-  // alert(text);
-  // setText(heading, "Simon Says");
-  // startButton.classList.remove("hidden");
-  // statusSpan.classList.add("hidden");
-  // padContainer.classList.add("unclickable");
+   alert(text);
+  setText(heading, "Simon Says");
+  startButton.classList.remove("hidden");
+  statusSpan.classList.add("hidden");
+  padContainer.classList.add("unclickable");
 }
 
 /**

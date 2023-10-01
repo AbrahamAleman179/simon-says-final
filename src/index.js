@@ -31,10 +31,6 @@ let roundCount = 0; // track the number of rounds that have been played so far
  *
  */
 
- const pads = [
-  Audio file for the yellow pad: "../assets/simon-says-sound-4.mp3"
- *
- */
 
 
 
@@ -68,7 +64,6 @@ padContainer.addEventListener("click", padHandler);
  * EVENT LISTENERS ABRAHAM
  */
 
-padContainer.addEventListener("click", padHandler);
 // TODO: Add an event listener `startButtonHandler()` to startButton.
 
 /**

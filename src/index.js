@@ -54,16 +54,17 @@ const pads = [
     color: "yellow",
     selector: document.querySelector(".js-pad-yellow"),
     sound: new Audio("../assets/simon-says-sound-4.mp3"),
-  },
+  }
   // TODO: Add the objects for the green, blue, and yellow pads. Use object for the red pad above as an example.
- startButton.addEventListener("click", startButtonHandler)
-padContainer.addEventListener("click", padHandler);
+ 
 ];
+
 
 /**
  * EVENT LISTENERS ABRAHAM
  */
-
+startButton.addEventListener("click", startButtonHandler)
+padContainer.addEventListener("click", padHandler);
 // TODO: Add an event listener `startButtonHandler()` to startButton.
 
 /**

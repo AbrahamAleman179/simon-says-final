@@ -60,6 +60,8 @@ const pads = [
     sound: new Audio("../assets/simon-says-sound-4.mp3"),
   },
   // TODO: Add the objects for the green, blue, and yellow pads. Use object for the red pad above as an example.
+ startButton.addEventListener("click", startButtonHandler)
+padContainer.addEventListener("click", padHandler);
 ];
 
 /**
@@ -89,6 +91,15 @@ padContainer.addEventListener("click", padHandler);
  */
 function startButtonHandler() {
   // TODO: Write your code here.
+  setLevel()
+
+  roundCount++
+
+  startButton.classList.add("hidden")
+
+  statusSpan.classList.remove("hidden")
+
+  playComputerTurn()
 
   return { startButton, statusSpan };
 }
@@ -113,13 +124,15 @@ function startButtonHandler() {
 function padHandler(event) {
   const { color } = event.target.dataset;
   if (!color) return;
-
+const pad = pads.find((element) => element.color === color)
+  pad.sound.play()
+  checkPress(color)
   // TODO: Write your code here.
   return color;
 }
 
 /**
- * HELPER FUNCTIONS
+ * HELPER FUNCTIONS abraham
  */
 
 /**

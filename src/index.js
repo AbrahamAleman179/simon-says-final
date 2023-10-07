@@ -152,24 +152,30 @@ const pad = pads.find((element) => element.color === color)
  * setLevel(8) //> returns "Please enter level 1, 2, 3, or 4";
  *
  */
-function setLevel(level = 1) {
-  if (level == 1 || null) {
-    maxRoundCount = 8
+function setLevel(level) {
+  // TODO: Write your code here.
+
+  if (level == 1) {
+     maxRoundCount = 8;
     return 8;
   } else if (level == 2) {
-    maxRoundCount = 14
+     maxRoundCount = 14;
     return 14;
   } else if (level == 3) {
-    maxRoundCount = 20
+     maxRoundCount = 20;
     return 20;
   } else if (level == 4) {
-    maxRoundCount = 31
+     maxRoundCount = 31;
     return 31;
   } else {
-    return "Please enter level 1, 2, 3, or 4"
+    const err = "Please enter level 1, 2, 3, or 4"
+   
+    return setText(statusSpan, err);
+    
   }
-  // TODO: Write your code here.
+  
 }
+
 
 /**
  * Returns a randomly selected item from a given array.
@@ -267,12 +273,14 @@ function activatePads(sequence) {
  * to the current round (roundCount) multiplied by 600ms which is the duration for each pad in the
  * sequence.
  */
- function playComputerTurn() {
-padContainer.classList.add("unclickable")
-  setText(statusSpan, "The computer's turn...")
-  setText(heading, `Round ${roundCount} of ${maxRoundCount}`)
-  computerSequence.push(getRandomItem(["red", "green", "blue", "yellow"]))
-  activatePads(computerSequence)
+  function playComputerTurn() {
+  
+  padContainer.classList.add("unclickable");
+  setText(statusSpan, "The computer's turn...");
+
+  setText(heading, `Round ${roundCount} of ${maxRoundCount}`);
+  computerSequence.push(getRandomItem(pads).color);
+  activatePads(computerSequence);
   setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
 }
 
@@ -284,16 +292,9 @@ padContainer.classList.add("unclickable")
  * 2. Display a status message showing the player how many presses are left in the round
  */
 function playHumanTurn() {
- padContainer.classList.remove("unclickable");
-  let remainingPresses = computerSequence.length - playerSequence.length;
-  if (remainingPresses == 1) {
-    setText(statusSpan, "Player's turn: 1 press left");
-  } else {
-    setText(statusSpan, `Player's turn: ${remainingPresses} presses left`);
-  }
-  
+  padContainer.classList.remove("unclickable");
+  setText(statusSpan, roundCount == 1 ? "1 press left!" : `${roundCount} presses left!`);
 }
-
 /**
  * Checks the player's selection every time the player presses on a pad during
  * the player's turn
@@ -317,20 +318,19 @@ function playHumanTurn() {
  *
  */
 function checkPress(color) {
- playerSequence.push(color)
-  const index = playerSequence.length - 1
-  let remainingPresses = computerSequence.length - playerSequence.length
-  if (remainingPresses === 1) {
-    setText(statusSpan, `Player's turn:${remainingPresses} press left`)
-  } else if (remainingPresses > 1) {
-    setText(statusSpan, `Player's turn:${remainingPresses} presses left`)
-  }
-  if (playerSequence[index] !== computerSequence[index]) {
-    resetGame("You lose...Try again");
-  } else if (remainingPresses === 0) {
-    checkRound()
-  }
+
+  playerSequence.push(color);
+  let index = playerSequence.length -1;
+  let remainingPresses = computerSequence.length - playerSequence.length;
  
+  setText(statusSpan, remainingPresses == 1 ? "1 press left!" : `${remainingPresses} presses left!`);
+  if (playerSequence[index] !== computerSequence[index]){
+    resetGame("wamp wamp :(");
+    return;
+  }
+  if (remainingPresses === 0) {
+    checkRound();
+  }
 }
 
 /**
@@ -347,18 +347,19 @@ function checkPress(color) {
  * all because it will get overwritten.
  *
  */
-
 function checkRound() {
- if (playerSequence.length === maxRoundCount) {
-    resetGame("Congratulations, you win!", true);
+ 
+  if (playerSequence.length === maxRoundCount) {
+    resetGame(" YOU TOTALLY WON! dude ");
+    return;
   } else {
-    roundCount++
-    playerSequence = []
-    setText(statusSpan, "Nice! Keep going!")
-    setTimeout(playComputerTurn, 1000)
+    roundCount++;
+    playerSequence = [];
+    setText(statusSpan, "Keep it up, bro!");
+    setTimeout(playComputerTurn, 1000);
   }
-  // TODO: Write your code here.
 }
+
 
 /**
  * Resets the game. Called when either the player makes a mistake or wins the game.

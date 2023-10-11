@@ -84,20 +84,15 @@ padContainer.addEventListener("click", padHandler);
  * 5. Call `playComputerTurn()` to start the game with the computer going first.
  *
  */
-function startButtonHandler() {
+  function startButtonHandler() {
   // TODO: Write your code here.
-  setLevel()
-
-  roundCount++
-
-  startButton.classList.add("hidden")
-
-  statusSpan.classList.remove("hidden")
-
-  playComputerTurn()
-
+  maxRoundCount = setLevel();
+  roundCount++;
+  startButton.classList.add("hidden");
+  statusSpan.classList.remove("hidden");
+  playComputerTurn();
   return { startButton, statusSpan };
-}
+
 
 /**
  * Called when one of the pads is clicked.
@@ -119,9 +114,9 @@ function startButtonHandler() {
 function padHandler(event) {
   const { color } = event.target.dataset;
   if (!color) return;
-const pad = pads.find((element) => element.color === color)
-  pad.sound.play()
-  checkPress(color)
+const pad = pads.find((element) => element.color === color);
+  pad.sound.play();
+  checkPress(color);
   // TODO: Write your code here.
   return color;
 }
@@ -151,28 +146,19 @@ const pad = pads.find((element) => element.color === color)
  * setLevel(8) //> returns "Please enter level 1, 2, 3, or 4";
  *
  */
-function setLevel(level) {
+function setLevel(level = 1) {
   // TODO: Write your code here.
-
-  if (level == 1) {
-     maxRoundCount = 8;
+  if (level == '' || level === 1) {
     return 8;
-  } else if (level == 2) {
-     maxRoundCount = 14;
+  } else if (level === 2) {
     return 14;
-  } else if (level == 3) {
-     maxRoundCount = 20;
+  } else if (level === 3) {
     return 20;
-  } else if (level == 4) {
-     maxRoundCount = 31;
+  } else if (level === 4) {
     return 31;
   } else {
-    const err = "Please enter level 1, 2, 3, or 4"
-   
-    return setText(statusSpan, err);
-    
+    return "Please enter level 1, 2, 3, or 4";
   }
-  
 }
 
 
@@ -291,13 +277,12 @@ function activatePads(sequence) {
  * 2. Display a status message showing the player how many presses are left in the round
  */
 function playHumanTurn() {
+  // TODO: Write your code here.
   padContainer.classList.remove("unclickable");
-  let remainingPresses = computerSequence.length - playerSequence.length;
-  if (remainingPresses == 1) {
-    setText(statusSpan, "Player's turn: 1 press left");
-  } else {
-    setText(statusSpan, `Player's turn: ${remainingPresses} presses left`);
-  }
+  setText(
+    statusSpan,
+    `Player turn: ${computerSequence.length - playerSequence.length} presses left`
+  );
 }
 /**
  * Checks the player's selection every time the player presses on a pad during

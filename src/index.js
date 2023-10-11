@@ -6,7 +6,7 @@
  // TODO: Add the missing query selectors:
  const statusSpan = document.querySelector(".js-status"); // Use querySelector() to get the status element
  const heading = document.querySelector(".js-heading"); // Use querySelector() to get the heading element
- const padContainer = document.querySelector(".js-heading"); // Use que// Use querySelector() to get the heading element
+ const padContainer = document.querySelector(".js-pad-container"); // Use que// Use querySelector() to get the heading element
 
 /**
  * VARIABLES
@@ -55,8 +55,7 @@ const pads = [
     selector: document.querySelector(".js-pad-yellow"),
     sound: new Audio("https://github.com/AbrahamAleman179/simon-says-final/raw/main/assets/simon-says-sound-4.mp3"),
   }
-  // TODO: Add the objects for the green, blue, and yellow pads. Use object for the red pad above as an example.
- 
+  
 ];
 
 
@@ -293,7 +292,12 @@ function activatePads(sequence) {
  */
 function playHumanTurn() {
   padContainer.classList.remove("unclickable");
-  setText(statusSpan, roundCount == 1 ? "1 press left!" : `${roundCount} presses left!`);
+  let remainingPresses = computerSequence.length - playerSequence.length;
+  if (remainingPresses == 1) {
+    setText(statusSpan, "Player's turn: 1 press left");
+  } else {
+    setText(statusSpan, `Player's turn: ${remainingPresses} presses left`);
+  }
 }
 /**
  * Checks the player's selection every time the player presses on a pad during

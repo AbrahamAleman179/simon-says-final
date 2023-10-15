@@ -336,7 +336,7 @@ function checkPress(color) {
     setText(statusSpan, `Player's turn:${remainingPresses} presses left`)
   }
   if (playerSequence[index] !== computerSequence[index]) {
-    resetGame("You lose...Try again");
+    resetGame("wamp wamp you lose...Try again");
   } else if (remainingPresses === 0) {
     checkRound()
   }
@@ -363,11 +363,11 @@ function checkPress(color) {
 function checkRound() {
   // TODO: Write your code here.
   if (playerSequence.length === maxRoundCount) {
-    resetGame("Congratulations, you win!", true);
+    resetGame("Congratulations, winner!", true);
   } else {
     roundCount++
     playerSequence = []
-    setText(statusSpan, "Nice! Keep going!")
+    setText(statusSpan, "great job! Keep going!")
     setTimeout(playComputerTurn, 1000)
   }
 }

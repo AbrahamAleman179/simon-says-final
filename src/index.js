@@ -388,7 +388,7 @@ function resetGame(text) {
   roundCount = [];
   // Uncomment the code below:
   alert(text);
-  setText(heading, "Simon Says");
+  setText(heading, "Abraham Says");
   startButton.classList.remove("hidden");
   statusSpan.classList.add("hidden");
   padContainer.classList.add("unclickable");

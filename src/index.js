@@ -381,33 +381,19 @@ function checkRound() {
  *
  * 3. Reset `roundCount` to an empty array
  */
-function resetGame(text, didWin= false) {
-  if(didWin) {
-    startConfetti()
-    setTimeout(()=> {
-      computerSequence = []
-      playerSequence = []
-      roundCount = 0
-      alert(text)
-      setText(heading, "Simon Says");
-      startButton.classList.remove("hidden");
-      statusSpan.classList.add("hidden");
-      padContainer.classList.add("unclickable");
-      stopConfetti();
-    }, 2000)
-  } else {
-
-    computerSequence = []
-    playerSequence = []
-    roundCount = 0
-    alert(text)
-    setText(heading, "Simon Says");
-    startButton.classList.remove("hidden");
-    statusSpan.classList.add("hidden");
-    padContainer.classList.add("unclickable");
-  }
-  
+function resetGame(text) {
+  // TODO: Write your code here.
+  computerSequence = [];
+  playerSequence = [];
+  roundCount = [];
+  // Uncomment the code below:
+  alert(text);
+  setText(heading, "Simon Says");
+  startButton.classList.remove("hidden");
+  statusSpan.classList.add("hidden");
+  padContainer.classList.add("unclickable");
 }
+
 
 /**
  * Please do not modify the code below.
